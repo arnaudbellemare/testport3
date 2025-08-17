@@ -1656,7 +1656,9 @@ def display_valuation_wizard(ticker_symbol):
         history = ticker.history(period="3y")
         financials = ticker.financials
         info = ticker.info
-        rev_g = (financials.loc['Total Revenue'].pct_change(periods=-1).mean()) * 100 if 'Total Revenue' in financials.index else 5.0
+
+# Corrected code to address the warning
+        rev_g = (financials.loc['Total Revenue'].pct_change(periods=-1, fill_method=None).mean()) * 100 if 'Total Revenue' in financials.index else 5.0
         gm = (financials.loc['Gross Profit'].iloc[0] / financials.loc['Total Revenue'].iloc[0]) * 100 if 'Gross Profit' in financials.index and 'Total Revenue' in financials.index and financials.loc['Total Revenue'].iloc[0] > 0 else 50.0
         op_inc = financials.loc['Operating Income'].iloc[0] if 'Operating Income' in financials.index else 0
         rev = financials.loc['Total Revenue'].iloc[0] if 'Total Revenue' in financials.index else 0
